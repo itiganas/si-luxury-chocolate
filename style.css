@@ -14,7 +14,7 @@ nav a:hover{color:#c69c6d;letter-spacing:1px;}
 .btn{padding:12px 24px;background:#4b2e20;color:white;border:none;border-radius:8px;cursor:pointer;transition:.3s;}
 .btn:hover{background:#8b5e3c;transform:translateY(-2px);}
 
-.products,.reviews,.contact{padding:70px;}
+.products,.reviews,.contact,.cart{padding:70px;}
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;}
 .card{background:white;padding:20px;border-radius:12px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.08);}
 
