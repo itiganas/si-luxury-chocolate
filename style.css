@@ -339,7 +339,8 @@ footer {
 }
 
 .footer-grid a:hover {
-    color: #fff;
+    color: #c69c6d;
+    transform: translateY(-5px);
 }
 
 .footer-bottom {
