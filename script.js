@@ -11,3 +11,4 @@ function loadComponent(id, file) {
 // Call the function for both header and footer
 loadComponent('header-placeholder', 'header.html');
 loadComponent('footer-placeholder', 'footer.html');
+

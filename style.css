@@ -64,6 +64,64 @@ nav a:hover {
     color: #c69c6d;
 }
 
+
+/*bag icon*/
+
+/* This targets the link container */
+.nav-bag-link {
+    display: inline-flex;
+    align-items: center;
+    /* Keeps icon and text perfectly leveled */
+    gap: 6px;
+    /* Small space between icon and "Bag" */
+    text-decoration: none;
+    color: inherit;
+    /* Forces it to use your existing nav text color */
+    font-family: inherit;
+}
+
+/* This targets the SVG icon itself */
+.bag-icon {
+    width: 1.1em;
+    /* Makes the icon size relative to your font size */
+    height: 1.1em;
+    stroke: currentColor;
+    /* Matches the text color automatically */
+    stroke-width: 2;
+    /* You can change this to 1.5 if it looks too bold */
+}
+
+/* Ensures the icon changes color if you have a hover effect on your links */
+.nav-bag-link:hover {
+    opacity: 0.8;
+    /* Or whatever hover style you currently use */
+}
+
+
+/* Keep everything in the nav aligned in one line */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Adjust this to match your existing spacing */
+}
+
+/* Style the Bag Icon to match your text color and size */
+.nav-bag-link {
+    display: flex;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.bag-icon {
+    width: 20px;
+    /* Adjust size to match your font height */
+    height: 20px;
+    stroke: currentColor;
+}
+
+
 /* 3. HERO & BUTTONS */
 .hero {
     position: relative;
