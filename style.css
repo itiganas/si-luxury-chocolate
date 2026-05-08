@@ -1,40 +1,213 @@
+/* 1. IMPORTS & BASE STYLES */
+/* Added Cinzel for Logo/Headers and Lato for Body */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@300;400;700&display=swap');
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,serif;scroll-behavior:smooth;}
-body{background:#fffaf5;color:#5c3b28;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
 
-header{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:white;position:sticky;top:0;box-shadow:0 2px 8px rgba(0,0,0,.05);}
-.logo{font-size:28px;font-weight:bold;letter-spacing:2px;cursor:pointer;transition:.3s;text-decoration:none;color:#5c3b28;}
-.logo:hover{transform:scale(1.05);filter:drop-shadow(0 0 10px #c69c6d);} 
-nav a{text-decoration:none;color:#7b4b2a;margin-left:25px;font-weight:500;transition:.3s;}
-nav a:hover{color:#c69c6d;letter-spacing:1px;}
+body {
+  background:#fffaf5;
+  color:#5c3b28; 
+  font-family: 'Lato', sans-serif;
+  line-height: 1.6;
+}
 
-.hero{height:85vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(to bottom,#fffaf5,#f5e6d3);}
-.hero h1{font-size:52px;margin-bottom:20px;font-weight:500;}
+/* 2. HEADER & NAVIGATION */
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
+  background:white;
+  position:sticky;
+  top:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+  z-index: 1000;
+}
 
-.btn{padding:12px 24px;background:#4b2e20;color:white;border:none;border-radius:8px;cursor:pointer;transition:.3s;}
-.btn:hover{background:#8b5e3c;transform:translateY(-2px);}
+.logo {
+  font-family: 'Cinzel', serif; /* Professional Luxury Font */
+  font-size:26px;
+  font-weight:bold;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition: all 0.4s ease;
+  text-decoration:none;
+  color:#5c3b28;
+  text-transform: uppercase;
+}
 
-.products,.reviews,.contact,.cart{padding:70px;}
-.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;}
-.card{background:white;padding:20px;border-radius:12px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.08);}
+.logo:hover {
+  color: #a67c52; /* Lighter Bronze/Gold color */
+  letter-spacing: 4px; /* Subtle high-end expansion effect */
+} 
 
-/* INLINE REVIEWS */
-.review-inline{display:flex;gap:15px;flex-wrap:wrap;}
-.review-inline .card{flex:1;min-width:220px;}
+nav a {
+  text-decoration:none;
+  color:#7b4b2a;
+  margin-left:25px;
+  transition:.3s;
+  font-size: 16px; 
+  font-weight: 500; 
+  text-transform: uppercase; 
+  letter-spacing: 1px;
+}
 
-input,textarea,select{padding:12px;border:1px solid #ddd;border-radius:8px;width:100%;margin-bottom:10px;}
-.socials a{margin-right:15px;text-decoration:none;color:#b77b4a;font-weight:bold;}
+nav a:hover {
+  color:#c69c6d;
+}
 
-/* FOOTER */
-footer{background:#2b1a12;color:white;padding:60px 60px 20px 60px;margin-top:50px;}
-.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;}
-.footer-grid h4{margin-bottom:15px;}
-.footer-grid a{display:block;color:#ddd;text-decoration:none;margin-bottom:8px;font-size:14px;}
-.footer-grid a:hover{color:#fff;}
-.footer-bottom{margin-top:40px;display:flex;justify-content:space-between;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.2);padding-top:20px;font-size:13px;}
+/* 3. HERO & BUTTONS */
+.hero {
+  height:85vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:linear-gradient(to bottom,#fffaf5,#f5e6d3);
+  overflow: hidden;
+}
 
+.hero h1 {
+  font-family: 'Cinzel', serif; /* Matching the logo for consistency */
+  font-size:72px;
+  margin-bottom:20px;
+  font-weight:700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #5c3b28;
+  
+  /* Reveal Animation */
+  animation: slideUp 1s ease-out forwards;
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.btn {
+  padding:12px 24px;
+  background:#8b5e3c;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.3s;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  background:#a67c52;
+  transform:translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 94, 60, 0.2);
+}
+
+/* 4. CONTENT SECTIONS */
+.products, .reviews, .contact, .cart { padding:70px; }
+
+.products-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+}
+
+.card {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.review-inline { display:flex; gap:15px; flex-wrap:wrap; }
+.review-inline .card { flex:1; min-width:220px; }
+
+input, textarea, select {
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  width:100%;
+  margin-bottom:10px;
+  font-family: 'Lato', sans-serif;
+}
+
+/* 5. FOOTER SECTION */
+footer {
+  background: #4b2e20;
+  color: white;
+  padding: 60px 60px 20px 60px;
+  margin-top: 50px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.footer-grid h4 {
+  font-family: 'Cinzel', serif;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f0f0f0;
+  text-transform: uppercase;
+}
+
+.footer-grid a {
+  display: block;
+  color: #ddd;
+  text-decoration: none;
+  margin-bottom: 12px;
+  font-size: 16px;
+  transition: .3s;
+}
+
+.footer-grid a:hover { color: #fff; }
+
+.footer-bottom {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.2);
+  padding-top: 20px;
+  font-size: 13px;
+}
+
+/* 6. SOCIAL ICONS */
+.social-links {
+  display: flex;
+  align-items: center; 
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.social-links .social-icon {
+  display: inline-block; 
+  font-size: 50px; /* Slightly smaller for better professional balance */
+  color: #f0f0f0;
+  line-height: 1;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.social-links .social-icon:hover { 
+  color: #c69c6d; 
+  transform: translateY(-5px);
+}
+
+/* 7. RESPONSIVE */
 @media(max-width:768px){
-.products-grid{grid-template-columns:1fr;}
-.footer-grid{grid-template-columns:1fr 1fr;}
-.review-inline{flex-direction:column;}
+  .products-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 42px; }
+  header { padding: 20px 30px; }
 }
