@@ -394,3 +394,138 @@ footer {
         padding: 20px 30px;
     }
 }
+
+
+/* 8. ABOUT SECTION (ATELIER) - UPDATED FOR WIDTH & READABILITY */
+.about-atelier {
+    display: block !important; /* Force out of flex/grid */
+    position: relative !important; 
+    width: 100%;
+    height: auto !important;
+    min-height: 100px;
+    padding: 100px 0;
+    background-color: #fffaf5; 
+    color: #5c3b28;
+    clear: both; /* Ensures it doesn't snag on hero floats */
+}
+
+.about-container {
+    /* Critical Fix: Remove any accidental sticky/flex inheritance */
+    display: block !important;
+    position: relative !important;
+    
+    max-width: 1200px; /* Adjusted to be slightly more elegant than 1500px */
+    margin: 0 auto !important; /* Forces horizontal centering in block mode */
+    padding: 0 40px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Header within About */
+.about-header {
+    display: block;
+    margin-bottom: 50px;
+}
+
+.about-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem; 
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #5c3b28;
+}
+
+.divider {
+    width: 80px;
+    height: 2px;
+    background: #a67c52;
+    margin: 0 auto 40px auto;
+}
+
+.about-intro {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.4rem; /* Increased size for readability */
+    font-weight: 300;
+    line-height: 1.9; /* More breathing room between lines */
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* Pillars Section */
+.about-pillars {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px; /* More space between the three columns */
+    margin: 100px 0;
+}
+
+.pillar-item {
+    flex: 1;
+}
+
+.pillar-label {
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    font-size: 1.2rem; /* Bigger labels */
+    letter-spacing: 3px;
+    color: #a67c52;
+    margin-bottom: 20px;
+}
+
+.pillar-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.15rem; /* Increased size */
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* Ensure the Quote Box is also scrolling naturally */
+.about-quote {
+    display: block;
+    position: relative !important;
+    margin: 60px auto 0 auto;
+    padding: 60px 40px;
+    background-color: #ffffff; 
+    border: 1px solid rgba(166, 124, 82, 0.2); 
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    max-width: 900px;
+}
+
+.quote-text {
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 1.8rem; /* Prominent quote size */
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: #5c3b28;
+}
+
+.quote-author {
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    color: #a67c52;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+    .about-pillars {
+        flex-direction: column;
+        gap: 60px;
+    }
+    
+    .about-title {
+        font-size: 2.5rem;
+    }
+
+    .about-intro {
+        font-size: 1.2rem;
+    }
+}
+
+

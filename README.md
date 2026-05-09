@@ -13,6 +13,11 @@ Welcome to the digital home of **SI Luxury Chocolate**. This repository hosts th
 * JavaScript (Interactive menu)
 * Java
 
+## Installation (Run Locally)
+Clone this repository:
+git clone https://github.com/itiganas/si-luxury-chocolate.git
+
+
 ## 🚀 Deployment
 This site is designed to be hosted via **GitHub Pages**.
 
