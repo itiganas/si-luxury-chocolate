@@ -72,7 +72,11 @@ Vite reads a different `.env` file depending on the command you run:
 | `.env.production` | `npm run build` |
 
 All variables must start with `VITE_` to be available in the browser.
-Inside any component, read the value with `import.meta.env.VITE_API_URL`.
+
+| Variable | Purpose |
+|----------|---------|
+| `VITE_API_URL` | Base URL for REST API calls (e.g. `http://localhost:8080/api/v1`) |
+| `VITE_GATEWAY_URL` | Base URL of the Spring Boot Gateway — used for OAuth2 login and logout redirects (e.g. `http://localhost:8080`) |
 
 ### The files
 

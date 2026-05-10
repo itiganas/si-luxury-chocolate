@@ -233,18 +233,162 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 
 ---
 
-## Authentication (future)
+## 5. Authentication — Google OAuth2 via Spring Boot Gateway
 
-If you later add user accounts, you will need:
+The Spring Boot Gateway acts as the **OAuth2 Client**. The frontend never handles tokens or interacts with Google directly — it only redirects the browser to the Gateway and reads the resulting session.
+
+### Login flow (step by step)
+
+```
+User clicks "Login with Google"
+  → browser redirects to  GET  {GATEWAY_URL}/oauth2/authorization/google
+  → Gateway redirects to Google consent screen
+  → Google authenticates and redirects back to Gateway
+  → Gateway creates a session cookie (HttpOnly, Secure)
+  → Gateway redirects browser back to the frontend (e.g. /)
+  → Frontend calls  GET  /api/v1/auth/me  (with cookie) to get user info
+```
+
+### Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/auth/register` | Create a new account |
-| `POST` | `/auth/login` | Log in, returns a token |
-| `POST` | `/auth/logout` | Invalidate the session |
-| `GET` | `/auth/me` | Return the logged-in user's profile |
+| `GET` | `{GATEWAY_URL}/oauth2/authorization/google` | Start Google login — **browser redirect, not a fetch call** |
+| `POST` | `{GATEWAY_URL}/logout` | Invalidate the session |
+| `GET` | `/api/v1/auth/me` | Return the logged-in user's profile |
 
-The recommended approach is **JWT tokens** stored in an `httpOnly` cookie (not localStorage) for security.
+> `GATEWAY_URL` is the base gateway URL (e.g. `http://localhost:8080`), configured via `VITE_GATEWAY_URL` in the `.env` files.
+
+### `GET /api/v1/auth/me` — Response (logged in)
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "picture": "https://lh3.googleusercontent.com/..."
+}
+```
+
+### `GET /api/v1/auth/me` — Response (not logged in)
+```
+HTTP 401 Unauthorized
+```
+
+**Frontend integration point:** `src/context/AuthContext.jsx` — already implemented. The `useEffect` on mount calls this endpoint to restore the session on page refresh.
+
+---
+
+### Java (Spring Boot Gateway) implementation guide
+
+#### 1. Dependencies — `pom.xml`
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-oauth2-client</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+#### 2. Google credentials — `application.yml`
+
+Register your app at https://console.cloud.google.com → APIs & Services → Credentials.
+Set the **Authorized redirect URI** to: `{GATEWAY_URL}/login/oauth2/code/google`
+
+```yaml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: YOUR_GOOGLE_CLIENT_ID
+            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+            scope: openid, profile, email
+```
+
+#### 3. Security config — `SecurityConfig.java`
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> csrf.disable())   // disable for REST APIs; re-enable if using form login
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/v1/auth/me").authenticated()
+                .requestMatchers("/api/v1/contact").permitAll()
+                .requestMatchers("/api/v1/products/**").permitAll()
+                .anyRequest().permitAll()
+            )
+            .oauth2Login(oauth2 -> oauth2
+                // After successful Google login, redirect back to the React app
+                .defaultSuccessUrl("http://localhost:5173/", true)
+            )
+            .logout(logout -> logout
+                // After logout, redirect back to the React app home
+                .logoutSuccessUrl("http://localhost:5173/")
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(
+            "http://localhost:5173",          // local dev
+            "https://te1.si-luxury-chocolate.ch",  // TE1
+            "https://si-luxury-chocolate.ch"  // production
+        ));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);  // required for session cookies to be sent
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+}
+```
+
+#### 4. Auth endpoint — `AuthController.java`
+
+```java
+@RestController
+@RequestMapping("/api/v1/auth")
+public class AuthController {
+
+    @GetMapping("/me")
+    public ResponseEntity<Map<String, String>> me(
+            @AuthenticationPrincipal OidcUser oidcUser) {
+
+        if (oidcUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Map<String, String> user = Map.of(
+            "name",    oidcUser.getFullName(),
+            "email",   oidcUser.getEmail(),
+            "picture", oidcUser.getPicture()
+        );
+        return ResponseEntity.ok(user);
+    }
+}
+```
+
+> `OidcUser` is injected automatically by Spring Security when the user is logged in via Google (which supports OpenID Connect). No manual token parsing needed.
+
+#### 5. Important: CORS + cookies
+
+The frontend sends `credentials: 'include'` on every API call so the session cookie is included. For this to work the backend **must**:
+- Set `allowCredentials(true)` in the CORS config (done above)
+- **Never** use `allowedOrigins("*")` when `allowCredentials` is true — Spring will reject it
 
 ---
 
