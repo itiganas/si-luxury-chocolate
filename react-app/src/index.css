@@ -15,7 +15,51 @@ body {
   line-height: 1.6;
 }
 
-/* 2. HEADER & NAVIGATION */
+/* 2. LOGO */
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #5c3b28;
+  transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.75;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-name {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5c3b28;
+}
+
+.logo-tagline {
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #a67c52;
+}
+
+/* 3. HEADER & NAVIGATION */
 header {
   display: flex;
   justify-content: space-between;
@@ -28,22 +72,6 @@ header {
   z-index: 1000;
 }
 
-.logo {
-  font-family: 'Cinzel', serif;
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  text-decoration: none;
-  color: #5c3b28;
-  text-transform: uppercase;
-}
-
-.logo:hover {
-  color: #a67c52;
-  letter-spacing: 4px;
-}
 
 nav {
   display: flex;
@@ -208,6 +236,14 @@ nav a:hover {
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .card h3 {
