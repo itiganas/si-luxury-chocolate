@@ -53,3 +53,71 @@ src/
 1. Create `src/pages/YourPage.jsx`
 2. Add a `<Route>` in `src/App.jsx`
 3. Add a `<Link>` in `src/components/Header.jsx`
+
+---
+
+## Environment configuration
+
+The backend API URL is controlled by environment files — one per environment.
+**Never hardcode a URL directly in a component.**
+
+### How it works
+
+Vite reads a different `.env` file depending on the command you run:
+
+| File | Used when |
+|------|-----------|
+| `.env.development` | `npm run dev` |
+| `.env.te1` | `npm run build -- --mode te1` |
+| `.env.production` | `npm run build` |
+
+All variables must start with `VITE_` to be available in the browser.
+Inside any component, read the value with `import.meta.env.VITE_API_URL`.
+
+### The files
+
+```
+.env.development   → http://localhost:8080/api/v1
+.env.te1           → https://te1-api.si-luxury-chocolate.ch/api/v1
+.env.production    → https://api.si-luxury-chocolate.ch/api/v1
+```
+
+Update the URLs in these files to match your actual backend addresses.
+
+### Running each environment
+
+**Local dev** (uses `.env.development`):
+```bash
+npm run dev
+```
+
+**TE1 build** (uses `.env.te1`):
+```bash
+npm run build -- --mode te1
+```
+
+**Production build** (uses `.env.production`):
+```bash
+npm run build
+```
+
+### Local overrides
+
+If you need to temporarily point to a different URL without touching the shared files,
+create a `.env.development.local` file (it is gitignored and only exists on your machine):
+
+```
+VITE_API_URL=http://localhost:9090/api/v1
+```
+
+Vite always gives `.local` files priority over the base `.env.*` files.
+
+### Adding a new API call
+
+When you add a new component that calls the backend, always use:
+
+```js
+const API_URL = import.meta.env.VITE_API_URL;
+```
+
+This one line is all you need — Vite substitutes the correct value at build time.

@@ -111,9 +111,9 @@ Called when the user clicks **Checkout** on the bag page.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/contact` | Send a contact message |
+| `POST` | `/api/v1/contact` | Send a contact message |
 
-### `POST /contact` — Request body
+### Request body
 ```json
 {
   "name": "Jane Doe",
@@ -122,7 +122,114 @@ Called when the user clicks **Checkout** on the bag page.
 }
 ```
 
-**Frontend integration point:** `src/components/ContactForm.jsx` — the form `onSubmit` handler.
+### Success response — `200 OK`
+```json
+{ "message": "Message received. We will be in touch shortly." }
+```
+
+### Error response — `400 Bad Request` (e.g. missing fields)
+```json
+{ "error": "All fields are required." }
+```
+
+**Frontend integration point:** `src/components/ContactForm.jsx` — the `handleSubmit` function already calls `POST /api/v1/contact`. Just start the backend and it will connect automatically.
+
+---
+
+### Java (Spring Boot) implementation guide
+
+#### 1. DTO — `ContactRequest.java`
+
+```java
+public class ContactRequest {
+    @NotBlank
+    private String name;
+
+    @Email
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String message;
+
+    // getters + setters
+}
+```
+
+#### 2. Controller — `ContactController.java`
+
+```java
+@RestController
+@RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:5173") // your React dev URL
+public class ContactController {
+
+    @PostMapping("/contact")
+    public ResponseEntity<Map<String, String>> contact(
+            @Valid @RequestBody ContactRequest request) {
+
+        // Option A: just log it for now
+        System.out.println("Contact from: " + request.getName() + " <" + request.getEmail() + ">");
+        System.out.println("Message: " + request.getMessage());
+
+        // Option B: save to database (add a ContactMessage entity + repository)
+        // contactRepository.save(new ContactMessage(request));
+
+        // Option C: send an email (add Spring Mail + configure SMTP in application.properties)
+        // mailService.send(request);
+
+        return ResponseEntity.ok(Map.of("message", "Message received. We will be in touch shortly."));
+    }
+}
+```
+
+#### 3. CORS (global config) — `WebConfig.java`
+
+If you prefer a global CORS config over `@CrossOrigin` on every controller:
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:5173", "https://si-luxury-chocolate.ch")
+                .allowedMethods("GET", "POST", "PUT", "DELETE");
+    }
+}
+```
+
+#### 4. Validation dependency — `pom.xml`
+
+Make sure you have this dependency so `@Valid`, `@NotBlank`, and `@Email` work:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+```
+
+#### 5. Sending an email (optional but recommended for a real shop)
+
+Add to `pom.xml`:
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+```
+
+Add to `application.properties`:
+```properties
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your@gmail.com
+spring.mail.password=your-app-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
 
 ---
 

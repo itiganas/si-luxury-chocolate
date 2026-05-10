@@ -13,7 +13,6 @@ function Header() {
         <Link to="/about">About</Link>
         <Link to="/shop">Shop</Link>
         <Link to="/contact">Contact</Link>
-        <Link to="/order">Order</Link>
         <Link to="/bag" className="nav-bag-link" aria-label="Shopping Bag">
           <svg
             className="bag-icon"
