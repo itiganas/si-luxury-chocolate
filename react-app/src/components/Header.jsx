@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import { useCart } from '../context/CartContext';
 
 function Header() {
+  const { cartCount } = useCart();
+
   return (
     <header>
       <Logo />
@@ -24,6 +27,9 @@ function Header() {
             <line x1="3" y1="6" x2="21" y2="6" />
             <path d="M16 10a4 4 0 0 1-8 0" />
           </svg>
+          {cartCount > 0 && (
+            <span className="cart-badge">{cartCount}</span>
+          )}
         </Link>
       </nav>
     </header>

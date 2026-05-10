@@ -1,10 +1,10 @@
 import ProductCard from '../components/ProductCard';
 
 const products = [
-  { id: 1, name: 'Dark Truffle',      price: 'CHF 12', image: '/images/choco_truffle.png' },
-  { id: 2, name: 'Hazelnut Praline',  price: 'CHF 15', image: '/images/choco_1.jpg' },
-  { id: 3, name: 'Milk Caramel',      price: 'CHF 10', image: '/images/choco_2.jpg' },
-  { id: 4, name: 'Dark Collection',   price: 'CHF 18', image: '/images/choco_3.jpg' },
+  { id: 1, name: 'Dark Truffle',     price: 12, image: '/images/choco_truffle.png' },
+  { id: 2, name: 'Hazelnut Praline', price: 15, image: '/images/choco_1.jpg' },
+  { id: 3, name: 'Milk Caramel',     price: 10, image: '/images/choco_2.jpg' },
+  { id: 4, name: 'Dark Collection',  price: 18, image: '/images/choco_3.jpg' },
 ];
 
 function ShopPage() {
@@ -15,6 +15,7 @@ function ShopPage() {
         {products.map((product) => (
           <ProductCard
             key={product.id}
+            id={product.id}
             name={product.name}
             price={product.price}
             image={product.image}

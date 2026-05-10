@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -10,6 +11,7 @@ import BagPage from './pages/BagPage';
 
 function App() {
   return (
+    <CartProvider>
     <BrowserRouter>
       <Header />
 
@@ -24,6 +26,7 @@ function App() {
 
       <Footer />
     </BrowserRouter>
+    </CartProvider>
   );
 }
 

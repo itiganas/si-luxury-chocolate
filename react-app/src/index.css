@@ -209,7 +209,28 @@ nav a:hover {
   box-shadow: 0 5px 15px rgba(139, 94, 60, 0.2);
 }
 
-/* 4. CONTENT SECTIONS */
+/* 4. CART BADGE */
+.nav-bag-link {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #8b5e3c;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 5. CONTENT SECTIONS */
 .products,
 .reviews,
 .contact,
@@ -265,7 +286,127 @@ nav a:hover {
   min-width: 220px;
 }
 
-/* 5. CONTACT FORM */
+/* CART PAGE */
+.cart-empty {
+  color: #a67c52;
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info h3 {
+  margin-bottom: 4px;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.qty-btn:hover {
+  background: #fffaf5;
+  border-color: #8b5e3c;
+}
+
+.qty-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.cart-item-subtotal {
+  min-width: 70px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.cart-remove-btn {
+  background: none;
+  border: none;
+  color: #a67c52;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.cart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.cart-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.cart-total strong {
+  font-size: 22px;
+  font-family: 'Cinzel', serif;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #8b5e3c;
+  border: 1.5px solid #8b5e3c;
+}
+
+.btn-outline:hover {
+  background: #8b5e3c;
+  color: white;
+}
+
+/* 6. CONTACT FORM */
 form {
   display: flex;
   flex-direction: column;
